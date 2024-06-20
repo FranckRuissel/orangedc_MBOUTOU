@@ -47,8 +47,8 @@ float humidite = 0;
 float temperature = 0;
 
 // LEDs
-#define LED_RED 32    // Broche GPIO pour la LED rouge
-#define LED_GREEN 33  // Broche GPIO pour la LED verte
+#define LED_RED 32    
+#define LED_GREEN 33  
 
 TaskHandle_t sendDataTask;
 TaskHandle_t controlLEDsTask;
@@ -64,7 +64,7 @@ void setup() {
   // Création des tâches FreeRTOS rrespectivement pour l'envoie des donnees a fire base et pour le controles des regles 
   xTaskCreatePinnedToCore(sendDataToFirebaseTask, "sendDataTask", 10000,  NULL, 1, &sendDataTask, 0);                         
   xTaskCreatePinnedToCore(controlLEDsTask,"controlLEDsTask", 10000,NULL,1,&controlLEDsTask,1); 
-  // Fonction tâche. Nomtâche, Taille pile (en mots), Paramètres, Priorité,Gestionnaire/ Noyau  (0 ou 1)
+  // Fonction tâche. Nomtâche, Taille pile, Paramètres, Priorité,Gestionnaire/ Noyau  (0 ou 1)
                        
 }
 
@@ -97,7 +97,7 @@ void sendDataToFirebaseTask(void *pvParameters) {
     // gestion des chemin des noeud pour facilite l'identification des serveurs
     String nodePath = "/nodes/noeud1"; 
 
-    // Envoie des donnees sur fire base 
+    // Envoie des donnees sur firebase 
     Firebase.setFloat(Firebase.RTDB, nodePath + "/humidite", humidite);
     Firebase.setFloat(Firebase.RTDB, nodePath + "/temperature", temperature);
 
@@ -109,7 +109,7 @@ void sendDataToFirebaseTask(void *pvParameters) {
     vTaskDelay(60000 / portTICK_PERIOD_MS); 
   }
 }
-
+//ici nous utilisons une boucle infinie pour recuperer les donnees jusqu'au respect des conditions
 void controlLEDsTask(void *pvParameters) {
   for (;;) {
     if (humidite > 50.0) {
