@@ -4,7 +4,7 @@
 ESP32 Dev Board
 apteur DHT11 pour la mesure d'humidité et de température
 Deux LEDs (une rouge et une verte)
-Résistances appropriées pour les LEDs
+Résistances appropriées pour les LEDs.
 
 Logiciel requis :
 - Arduino IDE avec le support pour ESP32
